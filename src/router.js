@@ -1,10 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
+import AuthService from './services/AuthService.js';
+
 import Home from './components/pages/Home.vue';
 import Auth from './components/pages/Auth.vue';
 import Login from './components/pages/Login.vue';
 import Registration from './components/pages/Registration.vue';
-import AuthService from './services/AuthService.js';
+import News from './components/pages/News.vue';
+import Contacts from './components/pages/Contacts.vue';
+import Services from './components/pages/Services.vue';
+import About from './components/pages/About.vue';
 
 const routes = [
   {
@@ -35,7 +40,11 @@ const routes = [
 
       return next({ name: 'home' });
     }
-  }
+  },
+  { name: 'news', path: '/news', component: News },
+  { name: 'services', path: '/services', component: Services },
+  { name: 'contacts', path: '/contacts', component: Contacts },
+  { name: 'about', path: '/about', component: About }
 ];
 
 const router = new createRouter({

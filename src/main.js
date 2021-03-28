@@ -3,6 +3,7 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Password from 'primevue/password';
 import ToastService from 'primevue/toastservice';
+import Sidebar from 'primevue/sidebar';
 
 import 'primeflex/primeflex.css';
 
@@ -15,6 +16,7 @@ const app = createApp(App);
 app.component('InputText', InputText);
 app.component('Button', Button);
 app.component('Password', Password);
+app.component('Sidebar', Sidebar);
 
 app.use(router);
 app.use(PrimeVue);

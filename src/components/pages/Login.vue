@@ -28,7 +28,7 @@ import useVuelidate from '@vuelidate/core';
 import { required, email } from '@vuelidate/validators';
 
 import ApiService from '../../services/ApiService.js';
-import CookieService from '../../services/CookieService.js';
+import AuthService from '../../services/AuthService.js';
 
 export default {
   setup() {
@@ -61,7 +61,7 @@ export default {
     login(user) {
       ApiService.post(`auth/login`, user)
         .then(res => {
-          CookieService.set(process.env.VUE_APP_TOKEN_NAME, res.data.access_token);
+          AuthService.login(res.data.access_token);
           this.$router.push('/');
         })
         .catch(err => {

@@ -15,6 +15,7 @@ export default {
 
 <style lang="scss">
 @import './assets/styles/styles.css';
+@import './assets/styles/global.scss';
 
 #app {
   font-family: 'Open Sans', Helvetica, Arial, sans-serif;
