@@ -4,6 +4,9 @@
       <router-link to="/">Home</router-link>
     </li>
     <li class="nav__item">
+      <router-link to="/users">Users</router-link>
+    </li>
+    <li class="nav__item">
       <router-link to="/news">News</router-link>
     </li>
     <li class="nav__item">
@@ -11,9 +14,6 @@
     </li>
     <li class="nav__item">
       <router-link to="/about">About</router-link>
-    </li>
-    <li class="nav__item">
-      <router-link to="/contacts">Contacts</router-link>
     </li>
     <li class="nav__item" @click="logout">Logout</li>
   </ul>
