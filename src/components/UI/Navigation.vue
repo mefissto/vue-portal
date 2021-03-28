@@ -1,0 +1,9 @@
+<template>
+  <ul>
+    <li>Home</li>
+    <li>News</li>
+    <li>Services</li>
+    <li>About</li>
+    <li>Contact</li>
+  </ul>
+</template>
