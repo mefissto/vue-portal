@@ -1,27 +1,79 @@
 <template>
   <h2>Login</h2>
-  <div class="p-fluid mt-4 mb-4">
-    <div class="p-float-label mb-4">
-      <InputText id="username" type="text" v-model="email" />
-      <label for="username">Email</label>
+  <form @submit.prevent="submit">
+    <div class="p-fluid mt-4 mb-4">
+      <div class="mb-4">
+        <span class="p-float-label mb-1">
+          <InputText id="email" type="email" v-model="email" @blur="v$.email.$touch" />
+          <label for="email">Email</label>
+        </span>
+        <div v-for="(error, index) of v$.email.$errors" :key="index" class="form__error">{{ error.$message }}</div>
+      </div>
+      <div>
+        <span class="p-float-label mb-1">
+          <Password id="password" :feedback="false" :toggleMask="true" v-model="password" @blur="v$.password.$touch" />
+          <label for="password">Password</label>
+        </span>
+        <div v-for="(error, index) of v$.password.$errors" :key="index" class="form__error">{{ error.$message }}</div>
+      </div>
+      <Button label="Don't have account?" class="p-button-link p-text-right" @click="$router.push('/auth/registration')" />
     </div>
-    <div class="p-float-label">
-      <InputText id="password" type="password" v-model="password" />
-      <label for="password">Password</label>
-    </div>
-    <Button label="Don't have account?" class="p-button-link p-text-right" @click="$router.push('/auth/registration')" />
-  </div>
 
-  <Button label="Submit" class="w-100" />
+    <Button type="submit" label="Submit" class="w-100" />
+  </form>
 </template>
 
 <script>
+import useVuelidate from '@vuelidate/core';
+import { required, email } from '@vuelidate/validators';
+
+import ApiService from '../../services/ApiService.js';
+import CookieService from '../../services/CookieService.js';
+
 export default {
+  setup() {
+    return { v$: useVuelidate() };
+  },
   data() {
     return {
       email: '',
       password: ''
     };
+  },
+  validations() {
+    return {
+      email: { required, email },
+      password: { required }
+    };
+  },
+  methods: {
+    submit() {
+      this.v$.$touch();
+      if (this.v$.$error) {
+        return;
+      }
+      const user = {
+        email: this.email,
+        password: this.password
+      };
+      this.login(user);
+    },
+    login(user) {
+      ApiService.post(`auth/login`, user)
+        .then(res => {
+          CookieService.set(process.env.VUE_APP_TOKEN_NAME, res.data.access_token);
+          this.$router.push('/');
+        })
+        .catch(err => {
+          let summary = 'Login failure';
+
+          if (err.response) {
+            summary = err.response.data?.message;
+          }
+
+          this.$toast.add({ severity: 'error', summary, life: 3000 });
+        });
+    }
   }
 };
 </script>

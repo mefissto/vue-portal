@@ -1,6 +1,17 @@
 <template>
   <router-view></router-view>
+  <Toast />
 </template>
+
+<script>
+import Toast from 'primevue/toast';
+
+export default {
+  components: {
+    Toast
+  }
+};
+</script>
 
 <style lang="scss">
 @import './assets/styles/styles.css';
@@ -20,12 +31,20 @@ body {
   background-color: #f5f5f5;
 }
 
-.p-button-link {
-  &:focus {
+.p-button.p-button-link {
+  &:focus,
+  &:enabled:focus {
     box-shadow: 0 0 0 0;
   }
 
   padding: 0;
   padding-top: 5px;
+}
+
+.form__error {
+  color: #f44336;
+  font-size: 12px;
+  text-align: left;
+  margin-left: 8px;
 }
 </style>
