@@ -23,10 +23,16 @@
 import AuthService from '../../services/AuthService.js';
 
 export default {
+  emits: ['route-change'],
   methods: {
     logout() {
       AuthService.logout();
       this.$router.push('/auth/login');
+    }
+  },
+  watch: {
+    $route() {
+      this.$emit('route-change');
     }
   }
 };
@@ -43,7 +49,6 @@ export default {
   font-weight: 500;
 
   &__item {
-    padding: 10px 0;
     cursor: pointer;
     position: relative;
     transition: transform 0.3s;
@@ -53,13 +58,17 @@ export default {
     }
 
     a {
+      display: inline-block;
+      padding: 10px 0;
+      width: 100%;
+      height: 100%;
       color: #495057;
     }
 
     &:hover,
     &:hover a,
     a:hover,
-    .router-link-active {
+    .router-link-exact-active {
       color: #b7e0b8;
       text-decoration: none;
     }

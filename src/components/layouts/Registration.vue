@@ -82,16 +82,16 @@ export default {
     registration(user) {
       ApiService.post(`auth/registration`, user)
         .then(() => {
-          this.$toast.add({ severity: 'success', summary: 'Registration successful', life: 3000 });
+          this.toastSuccess('Registration successful');
           this.$router.push('/auth/login');
         })
         .catch(err => {
-          let summary = 'Registration failure';
+          let message = 'Registration failure';
           if (err.response) {
-            summary = err.response.data.message;
+            message = err.response.data.message;
           }
 
-          this.$toast.add({ severity: 'error', summary, life: 3000 });
+          this.toastError(message);
         });
     }
   }

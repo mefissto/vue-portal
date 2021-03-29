@@ -29,11 +29,19 @@ const routes = [
       return next({ name: 'home' });
     }
   },
-  { name: 'home', path: '/', component: Home, meta: { requiresAuth: true } },
-  { name: 'users', path: '/users', component: Users, meta: { requiresAuth: true } },
-  { name: 'news', path: '/news', component: News, meta: { requiresAuth: true } },
-  { name: 'services', path: '/services', component: Services, meta: { requiresAuth: true } },
-  { name: 'about', path: '/about', component: About, meta: { requiresAuth: true } }
+  {
+    name: 'home',
+    path: '/',
+    component: Home,
+    redirect: '/users',
+    meta: { requiresAuth: true },
+    children: [
+      { name: 'users', path: '/users', component: Users },
+      { name: 'news', path: '/news', component: News },
+      { name: 'services', path: '/services', component: Services },
+      { name: 'about', path: '/about', component: About }
+    ]
+  }
 ];
 
 const router = new createRouter({

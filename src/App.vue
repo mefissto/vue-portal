@@ -1,14 +1,17 @@
 <template>
   <router-view></router-view>
   <Toast />
+  <ConfirmPopup></ConfirmPopup>
 </template>
 
 <script>
 import Toast from 'primevue/toast';
+import ConfirmPopup from 'primevue/confirmpopup';
 
 export default {
   components: {
-    Toast
+    Toast,
+    ConfirmPopup
   }
 };
 </script>

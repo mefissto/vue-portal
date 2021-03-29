@@ -29,6 +29,7 @@ import { required, email } from '@vuelidate/validators';
 
 import ApiService from '../../services/ApiService.js';
 import AuthService from '../../services/AuthService.js';
+import UserService from '../../services/UserService.js';
 
 export default {
   setup() {
@@ -62,16 +63,17 @@ export default {
       ApiService.post(`auth/login`, user)
         .then(res => {
           AuthService.login(res.data.access_token);
+          UserService.setUser(res.data.user);
           this.$router.push('/');
         })
         .catch(err => {
-          let summary = 'Login failure';
+          let message = 'Login failure';
 
           if (err.response) {
-            summary = err.response.data?.message;
+            message = err.response.data?.message;
           }
 
-          this.$toast.add({ severity: 'error', summary, life: 3000 });
+          this.toastError(message);
         });
     }
   }
