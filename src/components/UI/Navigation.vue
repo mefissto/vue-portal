@@ -27,6 +27,7 @@ export default {
   methods: {
     logout() {
       AuthService.logout();
+      this.$store.commit('resetState');
       this.$router.push('/auth/login');
     }
   },

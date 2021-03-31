@@ -5,7 +5,7 @@
         <div class="col-12">
           <div class="logo d-flex p-justify-between p-align-center">
             <h1><img src="../../assets/logo.png" alt="vue" class="mr-2" /><span>Portal</span></h1>
-            <Sidebar :visible="sidebarVisible" position="right" class="p-sidebar-sm">
+            <Sidebar v-model:visible="sidebarVisible" position="right">
               <Navigation @route-change="sidebarVisible = false" />
             </Sidebar>
 

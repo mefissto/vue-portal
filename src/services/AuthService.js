@@ -11,7 +11,6 @@ export default {
     return CookieService.set(process.env.VUE_APP_TOKEN_NAME, token);
   },
   logout() {
-    localStorage.removeItem(process.env.VUE_APP_USER_DATA);
     return CookieService.set(process.env.VUE_APP_TOKEN_NAME, '');
   }
 };

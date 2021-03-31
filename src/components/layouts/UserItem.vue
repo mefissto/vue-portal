@@ -2,7 +2,7 @@
   <div class="col-12 p-shadow-5 user d-flex align-items-center justify-content-between">
     <span> {{ username }}</span>
     <Button
-      v-if="user._id !== activeUser._id"
+      v-if="showDeleteButton"
       icon="pi pi-trash"
       class="p-button-rounded p-button-text"
       @click="$emit('remove-user', { event: $event, id: user._id })"
@@ -11,8 +11,6 @@
 </template>
 
 <script>
-import UserService from '../../services/UserService.js';
-
 export default {
   emits: ['remove-user'],
   props: {
@@ -21,14 +19,12 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      activeUser: UserService.getUser()
-    };
-  },
   computed: {
     username() {
       return `${this.user.firstName} ${this.user.lastName}`;
+    },
+    showDeleteButton() {
+      return this.$store.getters.activeUser?._id !== this.user._id;
     }
   }
 };

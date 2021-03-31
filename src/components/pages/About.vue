@@ -1,1 +1,1 @@
-<template>About <router-link to="/">Home</router-link></template>
+<template><div>About</div></template>

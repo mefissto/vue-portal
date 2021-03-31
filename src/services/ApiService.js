@@ -1,6 +1,15 @@
 import axios from 'axios';
 
+import router from '../router';
 import AuthService from './AuthService.js';
+
+axios.interceptors.response.use(null, err => {
+  if (err?.response?.status === 401 || err?.response?.data?.statusCode === 401) {
+    AuthService.logout();
+    router.push('/auth/login');
+  }
+  return Promise.reject(err);
+});
 
 export default {
   get(endpoint) {
@@ -17,6 +26,12 @@ export default {
 
   delete(endpoint, id) {
     return axios.delete(`${process.env.VUE_APP_BASE_API}/${endpoint}/${id}`, { headers: this.headers() });
+  },
+
+  getNews() {
+    return axios
+      .get(`https://newsapi.org/v2/everything?q=tesla&from=2021-02-28&sortBy=publishedAt&apiKey=${process.env.VUE_APP_NEWS_API_KEY}`)
+      .then(res => res.data.articles);
   },
 
   headers() {

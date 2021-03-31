@@ -51,4 +51,8 @@ body {
   text-align: left;
   margin-left: 8px;
 }
+
+.title {
+  color: #b7e0b8;
+}
 </style>
