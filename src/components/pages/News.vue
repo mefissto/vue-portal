@@ -8,27 +8,20 @@
 </template>
 
 <script>
-import ApiService from '../../services/ApiService.js';
+import { mapGetters, mapActions } from 'vuex';
+
 import NewsItem from '../layouts/NewsItem';
 
 export default {
   components: { NewsItem },
-  data() {
-    return {
-      news: []
-    };
+  computed: {
+    ...mapGetters('newsStore/', ['news'])
   },
   methods: {
-    fetchNews() {
-      ApiService.getNews().then(res => {
-        console.log('res: ', res);
-        this.news = [...res];
-      });
-    }
+    ...mapActions('newsStore/', ['fetchNews'])
   },
   created() {
     this.fetchNews();
-    console.log('this: ', this);
   }
 };
 </script>

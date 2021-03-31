@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   emits: ['remove-user'],
   props: {
@@ -24,8 +26,9 @@ export default {
       return `${this.user.firstName} ${this.user.lastName}`;
     },
     showDeleteButton() {
-      return this.$store.getters.activeUser?._id !== this.user._id;
-    }
+      return this.activeUser?._id !== this.user._id;
+    },
+    ...mapGetters('userStore/', ['activeUser'])
   }
 };
 </script>

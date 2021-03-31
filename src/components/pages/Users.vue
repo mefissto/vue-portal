@@ -8,38 +8,32 @@
 </template>
 
 <script>
-import ApiService from '../../services/ApiService.js';
+import { createNamespacedHelpers } from 'vuex';
+
 import UserItem from '../layouts/UserItem.vue';
 import ConfirmationMixin from '../../mixins/ConfirmationMixin';
+
+const { mapGetters, mapActions } = createNamespacedHelpers('userStore');
 
 export default {
   components: { UserItem },
   mixins: [ConfirmationMixin],
-  data() {
-    return {
-      users: []
-    };
+  computed: {
+    ...mapGetters(['users'])
   },
   methods: {
+    ...mapActions(['fetchUsers', 'removeUser']),
+
     removeUserHandler({ event, id }) {
-      this.deleteConfirm(event, () => this.removeUser(id));
-    },
-    removeUser(id) {
-      ApiService.delete('users', id)
-        .then(() => {
-          this.users = this.users.filter(user => user._id !== id);
-          this.toastSuccess('User successfully deleted');
-        })
-        .catch(() => this.toastSuccess('Error deleting user'));
-    },
-    fetchUsers() {
-      ApiService.get('users')
-        .then(res => (this.users = [...res?.data]))
-        .catch(err => this.toastError(err.message));
+      this.deleteConfirm(event, () =>
+        this.removeUser(id)
+          .then(() => this.toastSuccess('User successfully deleted'))
+          .catch(() => this.toastSuccess('Error deleting user'))
+      );
     }
   },
   created() {
-    this.fetchUsers();
+    this.fetchUsers().catch(err => this.toastError(err.message));
   }
 };
 </script>

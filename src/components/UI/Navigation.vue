@@ -20,14 +20,16 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import AuthService from '../../services/AuthService.js';
 
 export default {
   emits: ['route-change'],
   methods: {
+    ...mapActions(['resetState']),
     logout() {
       AuthService.logout();
-      this.$store.commit('resetState');
+      this.resetState();
       this.$router.push('/auth/login');
     }
   },

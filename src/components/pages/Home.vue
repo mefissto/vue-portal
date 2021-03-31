@@ -12,23 +12,25 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
+
 import TheFooter from '../layouts/TheFooter.vue';
 import TheHeader from '../layouts/TheHeader.vue';
-import ApiService from '../../services/ApiService.js';
+
+const { mapGetters, mapActions } = createNamespacedHelpers('userStore');
 
 export default {
   name: 'Home',
   components: { TheHeader, TheFooter },
+  computed: {
+    ...mapGetters(['activeUser'])
+  },
   methods: {
-    fetchActiveUserInfo() {
-      ApiService.get('auth/active-user')
-        .then(res => this.$store.commit('setActiveUser', res.data))
-        .catch(err => this.toastError(err.message));
-    }
+    ...mapActions(['fetchActiveUserInfo'])
   },
   created() {
-    if (!this.$store.getters.activeUser) {
-      this.fetchActiveUserInfo();
+    if (!this.activeUser) {
+      this.fetchActiveUserInfo().catch(err => this.toastError(err.message));
     }
   }
 };

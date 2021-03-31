@@ -1,5 +1,4 @@
 import { createApp } from 'vue';
-import { createStore } from 'vuex';
 
 import PrimeVue from 'primevue/config';
 import InputText from 'primevue/inputtext';
@@ -16,10 +15,9 @@ import 'primeflex/primeflex.css';
 import App from './App.vue';
 import router from './router';
 import ToastMixin from './mixins/ToastMixin';
-import Store from './store/store';
+import store from './store';
 
 const app = createApp(App);
-const store = createStore(Store);
 
 app.component('InputText', InputText);
 app.component('Button', Button);
